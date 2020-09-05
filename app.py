@@ -99,10 +99,11 @@ class Tiles():
         return True 
 
 class Tile(Label):
-    def __init__(self,parent, image,pos):
+    def __init__(self,parent, image, pos):
         Label.__init__(self,parent,image=image)
         self.image = image
-        self.pos, self.curpos = pos, pos
+        self.pos = pos[0], pos[1]
+        self.curpos = pos[0], pos[1]
     
     def show(self):
         self.grid(row=self.pos[0], column=self.pos[1])
@@ -111,6 +112,9 @@ class Tile(Label):
     Check if a tile is at the correct positon
     '''
     def is_correct_pos(self):
+        if self.pos == self.curpos:
+            print(str(self.pos)+"correct")
+            print(self.curpos)
         return self.pos == self.curpos
 
 class Board(Frame):
@@ -148,8 +152,8 @@ class Board(Frame):
     def slide(self,event):
         self.tiles.slide(event.keysym)
         if self.tiles.is_correct():
-            print("tile is correct")
-            self.win(self.tiles.moves)
+            pass
+            #self.win(self.tiles.moves)
     
 
     
@@ -185,7 +189,7 @@ class Main():
         frame = Frame(self.mainFrame,background='Rosy Brown1')
         Entry(frame,textvariable=self.image, width=50).grid(row=1, column=1, padx=10, pady=10, sticky=W)
         Button(frame, text='Choose Image', command=self.browse).grid(row=0,column=2,pady=10,padx=10)
-        OptionMenu(frame,self.grid,*[3,4,5]).grid(row=1,column=1,padx=10,pady=10,sticky=W)
+        OptionMenu(frame,self.grid,*[2,3,4,5]).grid(row=1,column=1,padx=10,pady=10,sticky=W)
         frame.pack()
         Button(self.mainFrame,text='Let\'s Play!',  command=self.start).pack(padx=10,pady=10)
         Button(self.mainFrame, text='Get AI Solution A*', command=self.play_ai_ast).pack(padx=10,pady=10)
